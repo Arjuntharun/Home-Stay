@@ -42,7 +42,7 @@ CLOUDINARY_API_KEY=787897544381928
 CLOUDINARY_API_SECRET=3AYDllwIl4ztERadYXxgtzkDZxg
 
 # Frontend URL
-FRONTEND_URL=http://localhost:3000
+FRONTEND_URL=http://localhost:5000
 ```
 
 ### 3. Create Admin User
