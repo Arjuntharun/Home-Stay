@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Hawkins Homestay</title>
+    <link rel="stylesheet" href="gallery-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 5L35 15V30L20 40L5 30V15L20 5Z" fill="#4ade80" opacity="0.8"/>
+                </svg>
+                <div class="logo-text">
+                    <h2>HAWKINS</h2>
+                    <p>HOMESTAY</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/public">HOME</a></li>
+                <li><a href="/public/about/about.html">ABOUT</a></li>
+                <li><a href="/public/activities/activities.html">ACTIVITIES</a></li>
+                <li><a href="/public/gallery/gallery.html">GALLERY</a></li>
+                <li><a href="/public/packages/packages.html">PACKAGES</a></li>
+                <li><a href="/public/wayanad/wayanad.html">WAYANAD</a></li>
+                <li><a href="/public/contact/contact.html">CONTACT</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gallery Hero -->
+    <section class="gallery-hero">
+        <div class="hero-overlay"></div>
+        <div class="gallery-hero-content">
+            <h1 class="gallery-title">
+                <span class="title-main">OUR</span>
+                <span class="title-sub">GALLERY</span>
+            </h1>
+            <p class="gallery-description">Explore the beauty of Wayanad through our lens</p>
+        </div>
+    </section>
+
+    <!-- Filter Tabs -->
+    <section class="filter-section">
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">ALL</button>
+            <button class="filter-btn" data-filter="rooms">ROOMS</button>
+            <button class="filter-btn" data-filter="nature">NATURE</button>
+            <button class="filter-btn" data-filter="activities">ACTIVITIES</button>
+            <button class="filter-btn" data-filter="dining">DINING</button>
+            <button class="filter-btn" data-filter="views">VIEWS</button>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="gallery-section">
+        <div class="gallery-grid">
+
+            <!-- Rooms -->
+            <div class="gallery-item" data-category="rooms">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800" alt="Luxury Room">
+                    <div class="gallery-overlay">
+                        <h3>Deluxe Suite</h3>
+                        <p>Premium comfort with nature views</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="rooms">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800" alt="Cozy Bedroom">
+                    <div class="gallery-overlay">
+                        <h3>Cozy Retreat</h3>
+                        <p>Comfortable accommodation for couples</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="rooms">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800" alt="Family Room">
+                    <div class="gallery-overlay">
+                        <h3>Family Suite</h3>
+                        <p>Spacious rooms for families</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nature -->
+            <div class="gallery-item" data-category="nature">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Forest Trail">
+                    <div class="gallery-overlay">
+                        <h3>Forest Trails</h3>
+                        <p>Dense green canopy pathways</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="nature">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1511576661531-b34d7da5d0bb?w=800" alt="Waterfall">
+                    <div class="gallery-overlay">
+                        <h3>Hidden Waterfall</h3>
+                        <p>Pristine cascading waters</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="nature">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800" alt="Mountain View">
+                    <div class="gallery-overlay">
+                        <h3>Misty Mountains</h3>
+                        <p>Breathtaking hill station views</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activities -->
+            <div class="gallery-item" data-category="activities">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800" alt="Trekking">
+                    <div class="gallery-overlay">
+                        <h3>Guided Treks</h3>
+                        <p>Adventure through wilderness</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="activities">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800" alt="Camping">
+                    <div class="gallery-overlay">
+                        <h3>Camping Nights</h3>
+                        <p>Under the starlit sky</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="activities">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800" alt="Bird Watching">
+                    <div class="gallery-overlay">
+                        <h3>Bird Watching</h3>
+                        <p>Discover exotic species</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dining -->
+            <div class="gallery-item" data-category="dining">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800" alt="Traditional Meal">
+                    <div class="gallery-overlay">
+                        <h3>Kerala Cuisine</h3>
+                        <p>Authentic traditional dishes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="dining">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800" alt="Breakfast">
+                    <div class="gallery-overlay">
+                        <h3>Fresh Breakfast</h3>
+                        <p>Organic farm-to-table meals</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="dining">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800" alt="Dining Area">
+                    <div class="gallery-overlay">
+                        <h3>Outdoor Dining</h3>
+                        <p>Dine amidst nature</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Views -->
+            <div class="gallery-item" data-category="views">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1495562569060-2eec283d3391?w=800" alt="Sunrise">
+                    <div class="gallery-overlay">
+                        <h3>Golden Sunrise</h3>
+                        <p>Spectacular dawn views</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="views">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Sunset">
+                    <div class="gallery-overlay">
+                        <h3>Sunset Paradise</h3>
+                        <p>Evening mountain silhouettes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="views">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800" alt="Valley View">
+                    <div class="gallery-overlay">
+                        <h3>Valley Vista</h3>
+                        <p>Panoramic landscapes</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Mixed Items -->
+            <div class="gallery-item" data-category="nature">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1511497584788-876760111969?w=800" alt="Tea Plantation">
+                    <div class="gallery-overlay">
+                        <h3>Tea Gardens</h3>
+                        <p>Lush green plantations</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="activities">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=800" alt="Bonfire">
+                    <div class="gallery-overlay">
+                        <h3>Bonfire Nights</h3>
+                        <p>Cozy evening gatherings</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="views">
+                <div class="gallery-card glass-liquid">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800" alt="Night Sky">
+                    <div class="gallery-overlay">
+                        <h3>Starry Nights</h3>
+                        <p>Milky way vistas</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-glass-box">
+            <h2>Experience It Yourself</h2>
+            <p>Book your stay and create your own memories in Wayanad.</p>
+            <div class="cta-buttons">
+                <a href="/#packages" class="btn-primary">BOOK NOW</a>
+                <a href="/" class="btn-secondary">BACK TO HOME</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L35 15V30L20 40L5 30V15L20 5Z" fill="#4ade80" opacity="0.8"/>
+                    </svg>
+                    <h3>HAWKINS</h3>
+                </div>
+                <p>Your gateway to nature's paradise in Wayanad.</p>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <a href="/#about">About Us</a>
+                <a href="/public/activities/activities.html">Activities</a>
+                <a href="#">Gallery</a>
+                <a href="/#packages">Packages</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p>Phone: +91 9876543210</p>
+                <p>Email: info@hawkinshomestay.com</p>
+                <p>Location: Wayanad, Kerala</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Newsletter</h4>
+                <p>Subscribe for special offers</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your email">
+                    <button type="submit">Subscribe</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Hawkins Homestay. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="gallery-script.js"></script>
+
+</body>
+</html>

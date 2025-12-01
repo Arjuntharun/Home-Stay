@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Now - Hawkins Homestay</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+    <link rel="stylesheet" href="book-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 5L35 15V30L20 40L5 30V15L20 5Z" fill="#4ade80" opacity="0.8"/>
+                </svg>
+                <div class="logo-text">
+                    <h2>HAWKINS</h2>
+                    <p>HOMESTAY</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/index.html">HOME</a></li>
+                <li><a href="/public/about/about.html">ABOUT</a></li>
+                <li><a href="/public/activities/activities.html">ACTIVITIES</a></li>
+                <li><a href="/public/gallery/gallery.html">GALLERY</a></li>
+                <li><a href="/public/packages/packages.html">PACKAGES</a></li>
+                <li><a href="/public/wayanad/wayanad.html">WAYANAD</a></li>
+                <li><a href="/public/contact/contact.html">CONTACT</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                <a href="/public/login/login.html" class="login-btn">LOGIN</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Book Now Section -->
+    <section class="book-section">
+        <div class="book-container">
+            
+            <!-- Header -->
+            <div class="book-header">
+                <span class="section-tag">BOOK YOUR STAY</span>
+                <h1>Choose Your Perfect Package</h1>
+                <p>Select from our curated experiences and customize your adventure</p>
+            </div>
+
+            <!-- Package Selection -->
+            <div class="packages-grid" id="packages-grid">
+                <!-- Packages will be loaded dynamically from API -->
+                <div class="loading-message" style="text-align: center; padding: 3rem; color: rgba(255, 255, 255, 0.7);">
+                    <p>Loading packages...</p>
+                </div>
+            </div>
+
+            <!-- Additional Activities Section -->
+            <div class="activities-section" id="activities-section" style="display: none;">
+                <div class="section-header-small">
+                    <h2>Enhance Your Experience</h2>
+                    <p>Add optional activities to your package</p>
+                </div>
+
+                <div class="activities-grid" id="activities-grid">
+                    <!-- Activities will be loaded dynamically from API -->
+                    <div class="loading-message" style="text-align: center; padding: 2rem; color: rgba(255, 255, 255, 0.7);">
+                        <p>Loading activities...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form & Summary -->
+            <div class="booking-form-section" id="booking-form-section" style="display: none;">
+                <div class="booking-grid">
+                    
+                    <!-- Booking Form -->
+                    <div class="booking-form glass-box">
+                        <h2>Your Details</h2>
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="full-name">Full Name *</label>
+                                <input type="text" id="full-name" placeholder="Enter your full name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row two-cols">
+                            <div class="input-group">
+                                <label for="checkin">Check-in Date *</label>
+                                <input type="date" id="checkin" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="checkout">Check-out Date *</label>
+                                <input type="date" id="checkout" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row two-cols">
+                            <div class="input-group">
+                                <label for="adults">Adults *</label>
+                                <select id="adults" required>
+                                    <option value="1">1 Adult</option>
+                                    <option value="2">2 Adults</option>
+                                    <option value="3">3 Adults</option>
+                                    <option value="4">4 Adults</option>
+                                    <option value="5">5+ Adults</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="children">Children</label>
+                                <select id="children">
+                                    <option value="0">No Children</option>
+                                    <option value="1">1 Child</option>
+                                    <option value="2">2 Children</option>
+                                    <option value="3">3+ Children</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="special-requests">Special Requests</label>
+                                <textarea id="special-requests" rows="4" placeholder="Any special requirements or dietary restrictions..."></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Booking Summary -->
+                    <div class="booking-summary glass-box">
+                        <h2>Booking Summary</h2>
+                        
+                        <div class="summary-item package-summary">
+                            <div class="summary-label">
+                                <strong>Package</strong>
+                            </div>
+                            <div class="summary-value">
+                                <span id="summary-package-name">-</span>
+                                <span id="summary-package-duration">-</span>
+                            </div>
+                            <div class="summary-price" id="summary-package-price">₹0</div>
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <div class="summary-activities" id="summary-activities">
+                            <div class="summary-label">
+                                <strong>Additional Activities</strong>
+                            </div>
+                            <div id="activities-list">
+                                <p class="no-activities">No activities selected</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <div class="summary-item guests-summary">
+                            <div class="summary-label">Number of Guests</div>
+                            <div class="summary-value" id="summary-guests">1 Adult</div>
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <div class="summary-total">
+                            <div class="summary-label">
+                                <strong>Total Amount</strong>
+                            </div>
+                            <div class="total-price" id="total-price">₹0</div>
+                        </div>
+
+                        <div class="summary-note">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            Price includes all taxes and service charges
+                        </div>
+
+                        <button class="confirm-booking-btn" id="confirm-booking-btn">
+                            Confirm Booking
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmation-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass-box">
+            <div class="modal-icon">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h2>Booking Confirmed!</h2>
+            <p>Thank you for choosing Hawkins Homestay. Your booking has been confirmed and a confirmation email has been sent to your registered email address.</p>
+            <div class="modal-details">
+                <div class="modal-detail-item">
+                    <strong>Booking ID:</strong>
+                    <span id="modal-booking-id">HH2024-XXX</span>
+                </div>
+                <div class="modal-detail-item">
+                    <strong>Package:</strong>
+                    <span id="modal-package-name">-</span>
+                </div>
+                <div class="modal-detail-item">
+                    <strong>Total Amount:</strong>
+                    <span id="modal-total-price">₹0</span>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-primary" id="view-booking-btn">View Booking</button>
+                <button class="btn-secondary" id="close-modal-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L35 15V30L20 40L5 30V15L20 5Z" fill="#4ade80" opacity="0.8"/>
+                    </svg>
+                    <h3>HAWKINS</h3>
+                </div>
+                <p>Your gateway to nature's paradise in Wayanad.</p>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <a href="/public/about/about.html">About Us</a>
+                <a href="/public/activities/activities.html">Activities</a>
+                <a href="/public/gallery/gallery.html">Gallery</a>
+                <a href="/public/packages/packages.html">Packages</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p>Phone: +91 9876543210</p>
+                <p>Email: info@hawkinshomestay.com</p>
+                <p>Location: Wayanad, Kerala</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Newsletter</h4>
+                <p>Subscribe for special offers</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your email">
+                    <button type="submit">Subscribe</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Hawkins Homestay. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="book-script.js"></script>
+
+</body>
+</html>

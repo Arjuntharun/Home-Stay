@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hawkins Homestay - Experience Nature</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 5L35 15V30L20 40L5 30V15L20 5Z" fill="#4ade80" opacity="0.8"/>
+                </svg>
+                <div class="logo-text">
+                    <h2>HAWKINS</h2>
+                    <p>HOMESTAY</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="active">HOME</a></li>
+                <li><a href="/public/about/about.html">ABOUT</a></li>
+                <li><a href="/public/activities/activities.html">ACTIVITIES</a></li>
+                <li><a href="/public/gallery/gallery.html">GALLERY</a></li>
+                <li><a href="/public/packages/packages.html">PACKAGES</a></li>
+                <li><a href="/public/wayanad/wayanad.html">WAYANAD</a></li>
+                <li><a href="/public/contact/contact.html">CONTACT</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                <a href="/public/login/login.html" class="login-btn">LOGIN</a>
+                <a href="/public/book/book.html" class="booked-btn">BOOK NOW</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Video -->
+    <section class="hero" id="home">
+
+        <!-- Background Video -->
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="/public/hero-video.mov" type="video/mp4">
+        </video>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-main">WAYANAD</span>
+                    <span class="title-sub">FOREST</span>
+                </h1>
+                <p class="hero-description">
+                    There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope
+                </p>
+                <button class="hero-btn">LEARN MORE</button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card glass-effect">
+                    <div class="stat-number">2500+</div>
+                    <div class="stat-label">HAPPY GUESTS</div>
+                </div>
+
+                <div class="stat-card glass-effect">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">PREMIUM ROOMS</div>
+                </div>
+
+                <div class="stat-card glass-effect">
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">AVERAGE RATING</div>
+                </div>
+            </div>
+
+            <!-- Hero Navigation -->
+            <div class="hero-nav">
+                <button class="hero-nav-btn prev">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <button class="hero-nav-btn next">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Dots -->
+            <div class="side-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="activities">
+        <div class="section-header">
+            <h2 class="section-title">Experience Wayanad Like Never Before</h2>
+            <p class="section-subtitle">Discover what makes Hawkins Homestay your perfect nature retreat</p>
+        </div>
+
+        <div class="features-container">
+
+            <div class="feature-card glass-liquid">
+                <div class="feature-image">
+                    <img src="Hero-bedroom.jpg" alt="Luxury Rooms">
+                </div>
+                <div class="feature-content">
+                    <h3>Luxury Rooms</h3>
+                    <p>Experience comfort with modern amenities and breathtaking nature views.</p>
+                    <a href="#rooms" class="feature-link">Explore More</a>
+                </div>
+            </div>
+
+            <div class="feature-card glass-liquid">
+                <div class="feature-image">
+                    <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600" alt="Adventure">
+                </div>
+                <div class="feature-content">
+                    <h3>Adventure Activities</h3>
+                    <p>Trekking, camping, wildlife exploration, sunrise hikes and more.</p>
+                    <a href="#adventures" class="feature-link">Explore More</a>
+                </div>
+            </div>
+
+            <div class="feature-card glass-liquid">
+                <div class="feature-image">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600" alt="Dining">
+                </div>
+                <div class="feature-content">
+                    <h3>Authentic Cuisine</h3>
+                    <p>Fresh organic Kerala dishes prepared with love.</p>
+                    <a href="#dining" class="feature-link">Explore More</a>
+                </div>
+            </div>
+
+            <div class="feature-card glass-liquid">
+                <div class="feature-image">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600" alt="Nature">
+                </div>
+                <div class="feature-content">
+                    <h3>Nature Trails</h3>
+                    <p>Discover waterfalls, wildlife, and serene landscapes.</p>
+                    <a href="#trails" class="feature-link">Explore More</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="welcome-section" id="about">
+        <div class="welcome-glass-container">
+            <div class="welcome-content glass-box">
+                <span class="section-tag">ABOUT US</span>
+                <h2>Your Home in the Wilderness</h2>
+                <p>Hawkins Homestay offers a blend of comfort, adventure, and pure nature. Wake up to birds, fresh air, and stunning green hills.</p>
+                
+                <div class="welcome-features">
+
+                    <div class="welcome-feature-item">
+                        <span class="feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </span>
+                        <div>
+                            <h4>Authentic Homestay Experience</h4>
+                            <p>Live like a local with warm Kerala hospitality.</p>
+                        </div>
+                    </div>
+
+                    <div class="welcome-feature-item">
+                        <span class="feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v20M2 12h20"></path>
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg>
+                        </span>
+                        <div>
+                            <h4>Eco-Friendly Living</h4>
+                            <p>We follow sustainable practices for nature protection.</p>
+                        </div>
+                    </div>
+
+                    <div class="welcome-feature-item">
+                        <span class="feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </span>
+                        <div>
+                            <h4>Prime Location</h4>
+                            <p>Close to major attractions and wildlife sanctuaries.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section" id="gallery">
+        <div class="section-header">
+            <h2 class="section-title">Guest Experiences</h2>
+            <p class="section-subtitle">Hear what our guests say</p>
+        </div>
+
+        <div class="testimonials-container">
+
+            <div class="testimonial-card glass-liquid">
+                <div class="stars">
+                    ⭐⭐⭐⭐⭐
+                </div>
+                <p>"An absolutely magical experience! Warm hospitality & delicious food."</p>
+                <div class="testimonial-author">
+                    <strong>Sarah Johnson</strong>
+                    <span>Australia</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card glass-liquid">
+                <div class="stars">
+                    ⭐⭐⭐⭐⭐
+                </div>
+                <p>"Perfect getaway! The trails, bird watching & meals were unforgettable."</p>
+                <div class="testimonial-author">
+                    <strong>Rahul Sharma</strong>
+                    <span>Mumbai, India</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card glass-liquid">
+                <div class="stars">
+                    ⭐⭐⭐⭐⭐
+                </div>
+                <p>"Beautiful property, clean rooms, great food. Will return again!"</p>
+                <div class="testimonial-author">
+                    <strong>Emily Chen</strong>
+                    <span>Singapore</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="packages">
+        <div class="cta-glass-box">
+            <h2>Ready for Your Nature Escape?</h2>
+            <p>Book your stay and create unforgettable memories.</p>
+            <div class="cta-buttons">
+                <a href="#booking" class="btn-primary">BOOK NOW</a>
+                <a href="#packages" class="btn-secondary">VIEW PACKAGES</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L35 15V30L20 40L5 30V15L20 5Z" fill="#4ade80" opacity="0.8"/>
+                    </svg>
+                    <h3>HAWKINS</h3>
+                </div>
+                <p>Your gateway to nature's paradise in Wayanad.</p>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <a href="/public/about/about.html">About Us</a>
+                <a href="/public/activities/activities.html">Activities</a>
+                <a href="/public/gallery/gallery.html">Gallery</a>
+                <a href="/public/packages/packages.html">Packages</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p>Phone: +91 9876543210</p>
+                <p>Email: info@hawkinshomestay.com</p>
+                <p>Location: Wayanad, Kerala</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Newsletter</h4>
+                <p>Subscribe for special offers</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your email">
+                    <button type="submit">Subscribe</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Hawkins Homestay. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

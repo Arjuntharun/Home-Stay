@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Hawkins Homestay</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="profile-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 5L35 15V30L20 40L5 30V15L20 5Z" fill="#4ade80" opacity="0.8"/>
+                </svg>
+                <div class="logo-text">
+                    <h2>HAWKINS</h2>
+                    <p>HOMESTAY</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/index.html">HOME</a></li>
+                <li><a href="/public/about/about.html">ABOUT</a></li>
+                <li><a href="/public/activities/activities.html">ACTIVITIES</a></li>
+                <li><a href="/public/gallery/gallery.html">GALLERY</a></li>
+                <li><a href="/public/packages/packages.html">PACKAGES</a></li>
+                <li><a href="/public/wayanad/wayanad.html">WAYANAD</a></li>
+                <li><a href="/public/contact/contact.html">CONTACT</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                <a href="/public/login/login.html" class="login-btn">LOGIN</a>
+                <a href="/public/book/book.html" class="booked-btn">BOOK NOW</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h1>My Profile</h1>
+                <p>Manage your account information and bookings</p>
+            </div>
+
+            <div class="profile-content">
+                <!-- Profile Info Card -->
+                <div class="profile-card glass-box">
+                    <h2>Personal Information</h2>
+                    <div class="profile-info">
+                        <div class="info-item">
+                            <label>Full Name</label>
+                            <input type="text" id="profile-name" readonly>
+                        </div>
+                        <div class="info-item">
+                            <label>Email Address</label>
+                            <input type="email" id="profile-email" readonly>
+                        </div>
+                        <div class="info-item">
+                            <label>Phone Number</label>
+                            <input type="tel" id="profile-phone" readonly>
+                        </div>
+                        <button class="edit-btn" id="edit-profile-btn">Edit Profile</button>
+                    </div>
+                </div>
+
+                <!-- Bookings Card -->
+                <div class="profile-card glass-box">
+                    <h2>My Bookings</h2>
+                    <div id="bookings-list">
+                        <p class="loading-text">Loading bookings...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L35 15V30L20 40L5 30V15L20 5Z" fill="#4ade80" opacity="0.8"/>
+                    </svg>
+                    <h3>HAWKINS</h3>
+                </div>
+                <p>Your gateway to nature's paradise in Wayanad.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <a href="/public/about/about.html">About Us</a>
+                <a href="/public/activities/activities.html">Activities</a>
+                <a href="/public/gallery/gallery.html">Gallery</a>
+            </div>
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p>Phone: +91 9876543210</p>
+                <p>Email: info@hawkinshomestay.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Hawkins Homestay. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+    <script src="profile-script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activities - Hawkins Homestay</title>
+    <link rel="stylesheet" href="activities-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 5L35 15V30L20 40L5 30V15L20 5Z" fill="#4ade80" opacity="0.8"/>
+                </svg>
+                <div class="logo-text">
+                    <h2>HAWKINS</h2>
+                    <p>HOMESTAY</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/index.html">HOME</a></li>
+                <li><a href="/public/about/about.html">ABOUT</a></li>
+                <li><a href="/public/activities/activities.html" class="active">ACTIVITIES</a></li>
+                <li><a href="/public/gallery/gallery.html">GALLERY</a></li>
+                <li><a href="/public/packages/packages.html">PACKAGES</a></li>
+                <li><a href="/public/wayanad/wayanad.html">WAYANAD</a></li>
+                <li><a href="/public/contact/contact.html">CONTACT</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                <a href="/public/login/login.html" class="login-btn">LOGIN</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Activities Hero Section -->
+    <section class="activities-hero">
+        <div class="activities-hero-overlay"></div>
+        <div class="activities-hero-content">
+            <h1 class="activities-hero-title">
+                <span class="title-main">ADVENTURE</span>
+                <span class="title-sub">AWAITS</span>
+            </h1>
+            <p class="activities-hero-description">
+                Discover thrilling experiences in the heart of Wayanad's wilderness
+            </p>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="intro-section">
+        <div class="intro-container glass-box">
+            <span class="section-tag">EXPLORE & DISCOVER</span>
+            <h2>Unforgettable Adventures in Wayanad</h2>
+            <p>From sunrise treks to thrilling night safaris, Hawkins Homestay offers a curated selection of adventure activities that let you experience Wayanad's natural beauty in the most exciting ways. Whether you're an adrenaline junkie or a nature lover, we have something special for everyone.</p>
+        </div>
+    </section>
+
+    <!-- Main Activities Grid -->
+    <section class="activities-section">
+        <div class="section-header">
+            <h2 class="section-title">Our Adventure Activities</h2>
+            <p class="section-subtitle">Choose your next adventure</p>
+        </div>
+
+        <div class="activities-grid" id="activities-grid">
+            <!-- Activities will be loaded dynamically from API -->
+            <div class="loading-message" style="text-align: center; padding: 3rem; color: rgba(255, 255, 255, 0.7);">
+                <p>Loading activities...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Section -->
+    <section class="safety-section">
+        <div class="safety-container">
+            <div class="section-header">
+                <h2 class="section-title">Your Safety, Our Priority</h2>
+                <p class="section-subtitle">We ensure every adventure is safe and memorable</p>
+            </div>
+            
+            <div class="safety-grid">
+                <div class="safety-card glass-effect">
+                    <div class="safety-icon">
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3>Certified Guides</h3>
+                    <p>All our guides are professionally trained and certified with years of experience.</p>
+                </div>
+
+                <div class="safety-card glass-effect">
+                    <div class="safety-icon">
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                        </svg>
+                    </div>
+                    <h3>Quality Equipment</h3>
+                    <p>We provide top-grade safety equipment regularly inspected and maintained.</p>
+                </div>
+
+                <div class="safety-card glass-effect">
+                    <div class="safety-icon">
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </div>
+                    <h3>Emergency Support</h3>
+                    <p>24/7 emergency response team and first aid support on all activities.</p>
+                </div>
+
+                <div class="safety-card glass-effect">
+                    <div class="safety-icon">
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3>Small Groups</h3>
+                    <p>Limited group sizes ensure personalized attention and better safety management.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-glass-box">
+            <h2>Ready for Your Adventure?</h2>
+            <p>Book your activities now and create unforgettable memories in Wayanad</p>
+            <div class="cta-buttons">
+                <a href="/public/book/book.html" class="btn-primary">BOOK NOW</a>
+                <a href="/public/contact/contact.html" class="btn-secondary">CONTACT US</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L35 15V30L20 40L5 30V15L20 5Z" fill="#4ade80" opacity="0.8"/>
+                    </svg>
+                    <h3>HAWKINS</h3>
+                </div>
+                <p>Your gateway to nature's paradise in Wayanad.</p>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <a href="/public/about/about.html">About Us</a>
+                <a href="/public/activities/activities.html">Activities</a>
+                <a href="/public/gallery/gallery.html">Gallery</a>
+                <a href="/public/packages/packages.html">Packages</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p>Phone: +91 9876543210</p>
+                <p>Email: info@hawkinshomestay.com</p>
+                <p>Location: Wayanad, Kerala</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Newsletter</h4>
+                <p>Subscribe for special offers</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your email">
+                    <button type="submit">Subscribe</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Hawkins Homestay. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="activities-script.js"></script>
+
+</body>
+</html>
