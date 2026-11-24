@@ -68,7 +68,7 @@ router.post('/', protect, [
 
     // Verify package exists
     const packageData = await Package.findById(packageId);
-    if (!packageData) {
+    if (!packageData || packageData.isActive === false) {
       return res.status(404).json({
         success: false,
         message: 'Package not found'

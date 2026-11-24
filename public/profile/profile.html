@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="profile-style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/js/site.css">
 </head>
 <body>
 
@@ -22,7 +23,7 @@
                     <p>HOMESTAY</p>
                 </div>
             </div>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="main-nav-menu">
                 <li><a href="/index.html">HOME</a></li>
                 <li><a href="/public/about/about.html">ABOUT</a></li>
                 <li><a href="/public/activities/activities.html">ACTIVITIES</a></li>
@@ -41,11 +42,11 @@
                 <a href="/public/login/login.html" class="login-btn">LOGIN</a>
                 <a href="/public/book/book.html" class="booked-btn">BOOK NOW</a>
             </div>
-            <div class="hamburger">
+            <button type="button" class="hamburger" aria-label="Toggle navigation" aria-controls="main-nav-menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -118,6 +119,7 @@
         </div>
     </footer>
 
+    <script src="/js/site.js"></script>
     <script src="/js/auth.js"></script>
     <script src="profile-script.js"></script>
 </body>

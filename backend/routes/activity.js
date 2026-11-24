@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 // @access  Public
 router.get('/:id', async (req, res) => {
   try {
-    const activity = await Activity.findById(req.params.id);
+    const activity = await Activity.findOne({ _id: req.params.id, isActive: true });
 
     if (!activity) {
       return res.status(404).json({

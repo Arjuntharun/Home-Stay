@@ -1,27 +1,31 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 const sendEmail = require('../utils/sendEmail');
-const generateOTP = require('../utils/generateOTP');
+const { generateOTP, hashOTP } = require('../utils/generateOTP');
+const rateLimit = require('../middleware/rateLimit');
 const emailTemplates = require('../utils/emailTemplates');
+
+router.use(require('./passwordRecovery'));
 
 // @route   POST /api/auth/register
 // @desc    Register a new user and send OTP
 // @access  Public
-router.post('/register', [
+router.post('/register', rateLimit(5, 15 * 60 * 1000), [
   body('name').trim().notEmpty().withMessage('Name is required'),
-  body('email').isEmail().withMessage('Please provide a valid email'),
+  body('email').isString().trim().toLowerCase().isEmail().withMessage('Please provide a valid email'),
   body('phone').trim().notEmpty().withMessage('Phone number is required'),
-  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
+  body('password').isString().isLength({ min: 6 }).custom(password => Buffer.byteLength(password) <= 72).withMessage('Use a password of at least 6 characters and at most 72 bytes')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        errors: errors.array()
+        errors: errors.array().map(({ path, msg }) => ({ path, msg }))
       });
     }
 
@@ -35,50 +39,12 @@ router.post('/register', [
           success: false,
           message: 'User already exists with this email'
         });
-      } else {
-        // User exists but not verified, update details and send new OTP
-        const otp = generateOTP();
-        
-        // Update user fields - use set() to ensure password is marked as modified
-        userExists.set({
-          name,
-          phone,
-          password,
-          otp,
-          otpExpiry: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
-        });
-        
-        // Mark password as modified explicitly
-        userExists.markModified('password');
-        
-        // Save user (password will be hashed by pre-save hook)
-        await userExists.save();
-
-        // Send OTP email using template
-        try {
-          const emailHtml = emailTemplates.getOTPEmailTemplate(name, otp);
-          await sendEmail({
-            email: userExists.email,
-            subject: 'Verify Your Email - Hawkins Homestay',
-            html: emailHtml
-          });
-        } catch (emailError) {
-          console.error('Error sending OTP email:', emailError);
-          return res.status(500).json({
-            success: false,
-            message: 'Failed to send OTP email'
-          });
-        }
-
-        return res.status(200).json({
-          success: true,
-          message: 'OTP sent to your email. Please verify to complete registration.',
-          data: {
-            email: userExists.email,
-            userId: userExists._id
-          }
-        });
       }
+      return res.status(200).json({
+        success: true,
+        message: 'Continue verification with your existing code, or request a new code.',
+        data: { email: userExists.email, userId: userExists._id }
+      });
     }
 
     // Generate OTP
@@ -92,7 +58,8 @@ router.post('/register', [
         email,
         phone,
         password,
-        otp,
+        otp: hashOTP(email, otp),
+        otpAttempts: 0,
         otpExpiry: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
       });
     } catch (createError) {
@@ -144,57 +111,41 @@ router.post('/register', [
 // @route   POST /api/auth/verify-otp
 // @desc    Verify OTP and activate user account
 // @access  Public
-router.post('/verify-otp', [
-  body('email').isEmail().withMessage('Please provide a valid email'),
-  body('otp').trim().notEmpty().withMessage('OTP is required')
+router.post('/verify-otp', rateLimit(20, 15 * 60 * 1000), [
+  body('email').isString().trim().toLowerCase().isEmail().withMessage('Please provide a valid email'),
+  body('otp').isString().trim().matches(/^[0-9]{6}$/).withMessage('OTP is required'),
+  body('password').isString().isLength({ min: 6 }).custom(password => Buffer.byteLength(password) <= 72).withMessage('Use a password of at least 6 characters and at most 72 bytes')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        errors: errors.array()
+        errors: errors.array().map(({ path, msg }) => ({ path, msg }))
       });
     }
 
-    const { email, otp } = req.body;
+    const { email, otp, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const challenge = {
+      email,
+      isEmailVerified: false,
+      otpExpiry: { $gt: new Date() },
+      otpAttempts: { $lt: 5 }
+    };
+    const digest = hashOTP(email, otp);
+    const validCode = await User.exists({ ...challenge, otp: digest });
+    const user = validCode && await User.findOneAndUpdate({ ...challenge, otp: digest }, {
+      $set: { isEmailVerified: true, password: await bcrypt.hash(password, 10) },
+      $unset: { otp: 1, otpExpiry: 1, otpAttempts: 1 }
+    });
     if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'User not found'
-      });
-    }
-
-    if (user.isEmailVerified) {
+      await User.updateOne({ ...challenge, otp: { $ne: digest } }, { $inc: { otpAttempts: 1 } });
       return res.status(400).json({
         success: false,
-        message: 'Email already verified'
+        message: 'Invalid or expired code. Request a new code if needed.'
       });
     }
-
-    // Check if OTP matches
-    if (user.otp !== otp) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid OTP'
-      });
-    }
-
-    // Check if OTP expired
-    if (new Date() > user.otpExpiry) {
-      return res.status(400).json({
-        success: false,
-        message: 'OTP has expired. Please request a new one.'
-      });
-    }
-
-    // Verify user
-    user.isEmailVerified = true;
-    user.otp = null;
-    user.otpExpiry = null;
-    await user.save();
 
     // Generate token
     const token = generateToken(user._id);
@@ -238,15 +189,15 @@ router.post('/verify-otp', [
 // @route   POST /api/auth/resend-otp
 // @desc    Resend OTP to user email
 // @access  Public
-router.post('/resend-otp', [
-  body('email').isEmail().withMessage('Please provide a valid email')
+router.post('/resend-otp', rateLimit(5, 15 * 60 * 1000), [
+  body('email').isString().trim().toLowerCase().isEmail().withMessage('Please provide a valid email')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        errors: errors.array()
+        errors: errors.array().map(({ path, msg }) => ({ path, msg }))
       });
     }
 
@@ -269,9 +220,19 @@ router.post('/resend-otp', [
 
     // Generate new OTP
     const otp = generateOTP();
-    user.otp = otp;
-    user.otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
-    await user.save();
+    const now = Date.now();
+    const result = await User.updateOne({
+      _id: user._id,
+      isEmailVerified: false,
+      $or: [{ otpExpiry: null }, { otpExpiry: { $lte: new Date(now + 9 * 60 * 1000) } }]
+    }, {
+      otp: hashOTP(email, otp),
+      otpAttempts: 0,
+      otpExpiry: new Date(now + 10 * 60 * 1000)
+    });
+    if (!result.modifiedCount) {
+      return res.status(429).json({ success: false, message: 'Wait a minute before requesting another code.' });
+    }
 
     // Send OTP email using template
     try {
@@ -306,8 +267,8 @@ router.post('/resend-otp', [
 // @route   POST /api/auth/login
 // @desc    Login user
 // @access  Public
-router.post('/login', [
-  body('email').isEmail().withMessage('Please provide a valid email'),
+router.post('/login', rateLimit(30, 15 * 60 * 1000), [
+  body('email').isString().trim().toLowerCase().isEmail().withMessage('Please provide a valid email'),
   body('password').notEmpty().withMessage('Password is required')
 ], async (req, res) => {
   try {
@@ -315,7 +276,7 @@ router.post('/login', [
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        errors: errors.array()
+        errors: errors.array().map(({ path, msg }) => ({ path, msg }))
       });
     }
 

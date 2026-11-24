@@ -1,23 +1,16 @@
 // API Base URL
-const API_BASE_URL = 'http://localhost:5000/api';
 
 // Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
-
-if (hamburger) {
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-}
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', function() {
         if (navMenu.classList.contains('active')) {
             navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
+            hamburger?.classList.remove('active');
+                hamburger?.setAttribute('aria-expanded', 'false');
         }
     });
 });
@@ -26,17 +19,18 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const target = document.getElementById(this.getAttribute('href').slice(1));
         if (target) {
             target.scrollIntoView({
-                behavior: 'smooth',
+                behavior: siteScrollBehavior,
                 block: 'start'
             });
             
             // Close mobile menu if open
             if (navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
-                hamburger.classList.remove('active');
+                hamburger?.classList.remove('active');
+                hamburger?.setAttribute('aria-expanded', 'false');
             }
         }
     });
@@ -101,18 +95,18 @@ function renderActivities(activities) {
         // Format features
         const featuresHtml = activity.features && activity.features.length > 0 
             ? activity.features.map(feature => `
-                <span>${feature}</span>
+                <span>${escapeHTML(feature)}</span>
             `).join('')
             : '';
         
         return `
             <div class="activity-card" 
                  data-activity-id="${activity._id}"
-                 data-activity-name="${activity.name}"
-                 data-activity-price="${activity.price}">
+                 data-activity-name="${escapeHTML(activity.name)}"
+                 data-activity-price="${escapeHTML(activity.price)}">
                 <div class="activity-image">
-                    <img src="${activity.image || '/public/images/default-activity.jpg'}" alt="${activity.name}" onerror="this.src='/public/images/default-activity.jpg'">
-                    <div class="activity-badge">${activity.duration || 'Available'}</div>
+                    <img src="${escapeHTML(activity.image || '/img/vally.jpg')}" alt="${escapeHTML(activity.name)}" onerror="this.src='/img/vally.jpg'">
+                    <div class="activity-badge">${escapeHTML(activity.duration || 'Available')}</div>
                 </div>
                 <div class="activity-content">
                     <div class="activity-header">
@@ -120,11 +114,11 @@ function renderActivities(activities) {
                             ${getActivityIconSVG(activity.name)}
                         </svg>
                         <div>
-                            <h3>${activity.name}</h3>
-                            <div class="activity-duration">${activity.duration || 'Custom Duration'}</div>
+                            <h3>${escapeHTML(activity.name)}</h3>
+                            <div class="activity-duration">${escapeHTML(activity.duration || 'Custom Duration')}</div>
                         </div>
                     </div>
-                    <p class="activity-description">${activity.description || 'Experience an amazing adventure at Hawkins Homestay.'}</p>
+                    <p class="activity-description">${escapeHTML(activity.description || 'Experience an amazing adventure at Hawkins Homestay.')}</p>
                     <div class="activity-price-display">
                         ₹${formatPrice(activity.price)} <span>per person</span>
                     </div>
@@ -236,36 +230,6 @@ function observeActivityCards() {
         card.style.transform = 'translateY(30px)';
         card.style.transition = `all 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
         observer.observe(card);
-    });
-}
-
-// Newsletter form validation
-const newsletterInput = document.querySelector('.newsletter-form input');
-const subscribeBtn = document.querySelector('.newsletter-form button');
-
-if (subscribeBtn && newsletterInput) {
-    subscribeBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const email = newsletterInput.value;
-        
-        if (validateEmail(email)) {
-            subscribeBtn.textContent = 'Subscribed!';
-            subscribeBtn.style.background = 'rgba(74, 222, 128, 0.3)';
-            newsletterInput.value = '';
-            
-            showNotification('Successfully subscribed to newsletter!', 'success');
-            
-            setTimeout(() => {
-                subscribeBtn.textContent = 'Subscribe';
-                subscribeBtn.style.background = '';
-            }, 3000);
-        } else {
-            newsletterInput.style.borderColor = '#ef4444';
-            showNotification('Please enter a valid email address', 'error');
-            setTimeout(() => {
-                newsletterInput.style.borderColor = '';
-            }, 2000);
-        }
     });
 }
 

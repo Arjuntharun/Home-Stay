@@ -796,3 +796,4 @@ h1, h2, h3, h4 {
         text-align: center;
     }
 }
+.local-experience .activity-content a { color: #86efac; text-underline-offset: .2em; }

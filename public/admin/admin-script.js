@@ -48,7 +48,6 @@ if (document.readyState === 'loading') {
 }
 
 // API Base URL
-const API_BASE_URL = 'http://localhost:5000/api';
 
 // Get authentication token
 function getAuthToken() {
@@ -197,13 +196,13 @@ async function loadDashboard() {
                 } else {
                     tableBody.innerHTML = data.data.recentBookings.slice(0, 5).map(booking => `
                         <tr>
-                            <td><strong>${booking.bookingId || booking._id}</strong></td>
-                            <td>${booking.user?.name || booking.guestDetails?.fullName || 'N/A'}</td>
-                            <td>${booking.package?.name || 'N/A'}</td>
+                            <td><strong>${escapeHTML(booking.bookingId || booking._id)}</strong></td>
+                            <td>${escapeHTML(booking.user?.name || booking.guestDetails?.fullName || 'N/A')}</td>
+                            <td>${escapeHTML(booking.package?.name || 'N/A')}</td>
                             <td>${formatDate(booking.checkIn)}</td>
                             <td>${formatDate(booking.checkOut)}</td>
                             <td>₹${formatPrice(booking.totalAmount || 0)}</td>
-                            <td><span class="status-badge ${booking.status}">${booking.status}</span></td>
+                            <td><span class="status-badge ${escapeHTML(booking.status)}">${escapeHTML(booking.status)}</span></td>
                         </tr>
                     `).join('');
                 }
@@ -293,13 +292,13 @@ function renderBookings(bookings) {
     
     tbody.innerHTML = bookings.map(booking => `
         <tr>
-            <td><strong>${booking.bookingId || booking._id}</strong></td>
-            <td>${booking.user?.name || booking.guestDetails?.fullName || 'N/A'}</td>
-            <td>${booking.package?.name || 'N/A'}</td>
+            <td><strong>${escapeHTML(booking.bookingId || booking._id)}</strong></td>
+            <td>${escapeHTML(booking.user?.name || booking.guestDetails?.fullName || 'N/A')}</td>
+            <td>${escapeHTML(booking.package?.name || 'N/A')}</td>
             <td>${formatDate(booking.checkIn)}</td>
             <td>${formatDate(booking.checkOut)}</td>
             <td>₹${formatPrice(booking.totalAmount || 0)}</td>
-            <td><span class="status-badge ${booking.status}">${booking.status}</span></td>
+            <td><span class="status-badge ${escapeHTML(booking.status)}">${escapeHTML(booking.status)}</span></td>
             <td>
                 <button class="btn-action" onclick="viewBooking('${booking._id}')">View</button>
                 <select class="status-select" onchange="updateBookingStatus('${booking._id}', this.value)" style="padding: 0.3rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: #fff; font-size: 0.8rem;">
@@ -333,7 +332,7 @@ async function loadPackages(section) {
     `;
     
     try {
-        const data = await apiCall('/packages');
+        const data = await apiCall('/admin/packages');
         
         if (data.success && data.data.packages) {
             renderPackages(data.data.packages);
@@ -360,16 +359,16 @@ function renderPackages(packages) {
     grid.innerHTML = packages.map(pkg => `
         <div class="glass-card package-item">
             <div class="package-item-image">
-                <img src="${pkg.image || 'https://via.placeholder.com/300x200?text=No+Image'}" alt="${pkg.name}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                <img src="${escapeHTML(pkg.image || 'https://via.placeholder.com/300x200?text=No+Image')}" alt="${escapeHTML(pkg.name)}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
                 <span class="status-badge ${pkg.isActive ? 'active' : 'inactive'}">${pkg.isActive ? 'Active' : 'Inactive'}</span>
             </div>
             <div class="package-item-content">
-                <h3>${pkg.name}</h3>
-                <p class="duration">${pkg.duration || 'N/A'}</p>
+                <h3>${escapeHTML(pkg.name)}</h3>
+                <p class="duration">${escapeHTML(pkg.duration || 'N/A')}</p>
                 <p class="price">₹${formatPrice(pkg.price || 0)}</p>
                 <div class="package-actions">
                     <button class="btn-action" onclick="editPackage('${pkg._id}')">Edit</button>
-                    <button class="btn-action danger" onclick="deletePackage('${pkg._id}')">Delete</button>
+                    <button class="btn-action danger" onclick="deletePackage('${pkg._id}')">Archive</button>
                 </div>
             </div>
         </div>
@@ -396,7 +395,7 @@ async function loadActivities(section) {
     `;
     
     try {
-        const data = await apiCall('/activities');
+        const data = await apiCall('/admin/activities');
         
         if (data.success && data.data.activities) {
             renderActivities(data.data.activities);
@@ -423,15 +422,15 @@ function renderActivities(activities) {
     grid.innerHTML = activities.map(activity => `
         <div class="glass-card activity-item">
             <div class="activity-item-image">
-                <img src="${activity.image || 'https://via.placeholder.com/300x200?text=No+Image'}" alt="${activity.name}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                <img src="${escapeHTML(activity.image || 'https://via.placeholder.com/300x200?text=No+Image')}" alt="${escapeHTML(activity.name)}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
                 <span class="status-badge ${activity.isActive ? 'active' : 'inactive'}">${activity.isActive ? 'Active' : 'Inactive'}</span>
             </div>
             <div class="activity-item-content">
-                <h3>${activity.name}</h3>
+                <h3>${escapeHTML(activity.name)}</h3>
                 <p class="price">₹${formatPrice(activity.price || 0)}</p>
                 <div class="activity-actions">
                     <button class="btn-action" onclick="editActivity('${activity._id}')">Edit</button>
-                    <button class="btn-action danger" onclick="deleteActivity('${activity._id}')">Delete</button>
+                    <button class="btn-action danger" onclick="deleteActivity('${activity._id}')">Archive</button>
                 </div>
             </div>
         </div>
@@ -477,10 +476,10 @@ async function loadUsers(section) {
             } else {
                 tbody.innerHTML = data.data.users.map(user => `
                     <tr>
-                        <td><strong>${user.name}</strong></td>
-                        <td>${user.email}</td>
-                        <td>${user.phone || 'N/A'}</td>
-                        <td><span class="status-badge ${user.role}">${user.role}</span></td>
+                        <td><strong>${escapeHTML(user.name)}</strong></td>
+                        <td>${escapeHTML(user.email)}</td>
+                        <td>${escapeHTML(user.phone || 'N/A')}</td>
+                        <td><span class="status-badge ${escapeHTML(user.role)}">${escapeHTML(user.role)}</span></td>
                         <td><span class="status-badge ${user.isEmailVerified ? 'active' : 'inactive'}">${user.isEmailVerified ? 'Verified' : 'Not Verified'}</span></td>
                         <td>${formatDate(user.createdAt)}</td>
                         <td>
@@ -537,13 +536,13 @@ async function loadPayments(section) {
             } else {
                 tbody.innerHTML = data.data.payments.map(payment => `
                     <tr>
-                        <td><strong>${payment.paymentId || payment._id}</strong></td>
-                        <td>${payment.booking?.bookingId || payment.booking?._id || 'N/A'}</td>
-                        <td>${payment.user?.name || payment.user?.email || 'N/A'}</td>
+                        <td><strong>${escapeHTML(payment.paymentId || payment._id)}</strong></td>
+                        <td>${escapeHTML(payment.booking?.bookingId || payment.booking?._id || 'N/A')}</td>
+                        <td>${escapeHTML(payment.user?.name || payment.user?.email || 'N/A')}</td>
                         <td>₹${formatPrice(payment.amount || 0)}</td>
-                        <td>${payment.paymentMethod || 'Razorpay'}</td>
+                        <td>${escapeHTML(payment.paymentMethod || 'Razorpay')}</td>
                         <td>${formatDate(payment.paymentDate || payment.createdAt)}</td>
-                        <td><span class="status-badge ${payment.status}">${payment.status}</span></td>
+                        <td><span class="status-badge ${escapeHTML(payment.status)}">${escapeHTML(payment.status)}</span></td>
                     </tr>
                 `).join('');
             }
@@ -592,7 +591,7 @@ function openAddPackageModal() {
 
 async function editPackage(id) {
     try {
-        const data = await apiCall(`/packages/${id}`);
+        const data = await apiCall(`/admin/packages/${id}`);
         if (data.success && data.data.package) {
             showPackageModal(data.data.package);
         } else {
@@ -605,7 +604,7 @@ async function editPackage(id) {
 }
 
 async function deletePackage(id) {
-    if (!confirm('Are you sure you want to delete this package? This action cannot be undone.')) {
+    if (!confirm('Are you sure you want to archive this package? It will be hidden from guests.')) {
         return;
     }
     
@@ -615,18 +614,18 @@ async function deletePackage(id) {
         });
         
         if (data.success) {
-            showNotification('Package deleted successfully', 'success');
+            showNotification('Package archived successfully', 'success');
             // Reload packages
             const section = document.getElementById('packages-section');
             if (section && section.classList.contains('active')) {
                 loadPackages(section);
             }
         } else {
-            showNotification(data.message || 'Failed to delete package', 'error');
+            showNotification(data.message || 'Failed to archive package', 'error');
         }
     } catch (error) {
         console.error('Error deleting package:', error);
-        showNotification('Failed to delete package', 'error');
+        showNotification('Failed to archive package', 'error');
     }
 }
 
@@ -636,7 +635,7 @@ function openAddActivityModal() {
 
 async function editActivity(id) {
     try {
-        const data = await apiCall(`/activities/${id}`);
+        const data = await apiCall(`/admin/activities/${id}`);
         if (data.success && data.data.activity) {
             showActivityModal(data.data.activity);
         } else {
@@ -649,7 +648,7 @@ async function editActivity(id) {
 }
 
 async function deleteActivity(id) {
-    if (!confirm('Are you sure you want to delete this activity? This action cannot be undone.')) {
+    if (!confirm('Are you sure you want to archive this activity? It will be hidden from guests.')) {
         return;
     }
     
@@ -659,18 +658,18 @@ async function deleteActivity(id) {
         });
         
         if (data.success) {
-            showNotification('Activity deleted successfully', 'success');
+            showNotification('Activity archived successfully', 'success');
             // Reload activities
             const section = document.getElementById('activities-section');
             if (section && section.classList.contains('active')) {
                 loadActivities(section);
             }
         } else {
-            showNotification(data.message || 'Failed to delete activity', 'error');
+            showNotification(data.message || 'Failed to archive activity', 'error');
         }
     } catch (error) {
         console.error('Error deleting activity:', error);
-        showNotification('Failed to delete activity', 'error');
+        showNotification('Failed to archive activity', 'error');
     }
 }
 
@@ -796,23 +795,23 @@ function showPackageModal(packageData = null) {
             <form id="package-form">
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);">Package Name *</label>
-                    <input type="text" id="package-name" value="${packageData?.name || ''}" required style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff;">
+                    <input type="text" id="package-name" value="${escapeHTML(packageData?.name || '')}" required style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff;">
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);">Description *</label>
-                    <textarea id="package-description" required style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; min-height: 100px;">${packageData?.description || ''}</textarea>
+                    <textarea id="package-description" required style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; min-height: 100px;">${escapeHTML(packageData?.description || '')}</textarea>
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);">Duration * (e.g., "2 Nights / 3 Days")</label>
-                    <input type="text" id="package-duration" value="${packageData?.duration || ''}" required style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff;">
+                    <input type="text" id="package-duration" value="${escapeHTML(packageData?.duration || '')}" required style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff;">
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);">Price (₹) *</label>
-                    <input type="number" id="package-price" value="${packageData?.price || ''}" required min="0" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff;">
+                    <input type="number" id="package-price" value="${escapeHTML(packageData?.price || '')}" required min="0" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff;">
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);">Features (one per line)</label>
-                    <textarea id="package-features" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; min-height: 80px;">${packageData?.features?.join('\n') || ''}</textarea>
+                    <textarea id="package-features" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; min-height: 80px;">${escapeHTML(packageData?.features?.join('\n') || '')}</textarea>
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);">Image</label>
@@ -908,15 +907,15 @@ function showActivityModal(activityData = null) {
             <form id="activity-form">
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);">Activity Name *</label>
-                    <input type="text" id="activity-name" value="${activityData?.name || ''}" required style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff;">
+                    <input type="text" id="activity-name" value="${escapeHTML(activityData?.name || '')}" required style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff;">
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);">Description *</label>
-                    <textarea id="activity-description" required style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; min-height: 100px;">${activityData?.description || ''}</textarea>
+                    <textarea id="activity-description" required style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; min-height: 100px;">${escapeHTML(activityData?.description || '')}</textarea>
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);">Price (₹) *</label>
-                    <input type="number" id="activity-price" value="${activityData?.price || ''}" required min="0" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff;">
+                    <input type="number" id="activity-price" value="${escapeHTML(activityData?.price || '')}" required min="0" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff;">
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);">Image</label>

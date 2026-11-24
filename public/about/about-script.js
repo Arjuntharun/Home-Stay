@@ -2,28 +2,22 @@
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-if (hamburger) {
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-}
-
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const target = document.getElementById(this.getAttribute('href').slice(1));
         if (target) {
             target.scrollIntoView({
-                behavior: 'smooth',
+                behavior: siteScrollBehavior,
                 block: 'start'
             });
             
             // Close mobile menu if open
             if (navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
-                hamburger.classList.remove('active');
+                hamburger?.classList.remove('active');
+                hamburger?.setAttribute('aria-expanded', 'false');
             }
         }
     });
@@ -116,33 +110,6 @@ const statsObserver = new IntersectionObserver(function(entries) {
 document.querySelectorAll('.stat-item').forEach(stat => {
     statsObserver.observe(stat);
 });
-
-// Newsletter form validation
-const newsletterInput = document.querySelector('.newsletter-form input');
-const subscribeBtn = document.querySelector('.newsletter-form button');
-
-if (subscribeBtn && newsletterInput) {
-    subscribeBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const email = newsletterInput.value;
-        
-        if (validateEmail(email)) {
-            subscribeBtn.textContent = 'Subscribed!';
-            subscribeBtn.style.background = 'rgba(74, 222, 128, 0.3)';
-            newsletterInput.value = '';
-            
-            setTimeout(() => {
-                subscribeBtn.textContent = 'Subscribe';
-                subscribeBtn.style.background = '';
-            }, 3000);
-        } else {
-            newsletterInput.style.borderColor = '#ef4444';
-            setTimeout(() => {
-                newsletterInput.style.borderColor = '';
-            }, 2000);
-        }
-    });
-}
 
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

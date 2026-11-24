@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 // @access  Public
 router.get('/:id', async (req, res) => {
   try {
-    const package = await Package.findById(req.params.id);
+    const package = await Package.findOne({ _id: req.params.id, isActive: true });
 
     if (!package) {
       return res.status(404).json({

@@ -1,5 +1,4 @@
 // API Base URL
-const API_BASE_URL = 'http://localhost:5000/api';
 
 // Get authentication token
 function getAuthToken() {
@@ -31,19 +30,13 @@ let activitiesData = [];
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-if (hamburger) {
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-}
-
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', function() {
         if (navMenu.classList.contains('active')) {
             navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
+            hamburger?.classList.remove('active');
+                hamburger?.setAttribute('aria-expanded', 'false');
         }
     });
 });
@@ -100,7 +93,7 @@ function selectPackage(card) {
     // Smooth scroll to activities
     setTimeout(() => {
         if (activitiesSection) {
-            activitiesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            activitiesSection.scrollIntoView({ behavior: siteScrollBehavior, block: 'start' });
         }
     }, 300);
     
@@ -188,7 +181,7 @@ function updateSummary() {
     } else {
         activitiesList.innerHTML = bookingState.selectedActivities.map(activity => `
             <div class="activity-item">
-                <span class="activity-item-name">${activity.name}</span>
+                <span class="activity-item-name">${escapeHTML(activity.name)}</span>
                 <span class="activity-item-price">+₹${formatPrice(activity.price * bookingState.numberOfGuests)}</span>
             </div>
         `).join('');
@@ -303,7 +296,7 @@ function validateBookingForm() {
     
     if (!bookingState.selectedPackage) {
         showNotification('Please select a package', 'error');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: siteScrollBehavior });
         return false;
     }
     
@@ -863,19 +856,19 @@ function renderPackages(packages) {
     packagesGrid.innerHTML = packages.map(pkg => `
         <div class="package-card" 
              data-package-id="${pkg._id}"
-             data-package-name="${pkg.name}"
-             data-package-price="${pkg.price}"
-             data-package-duration="${pkg.duration || 'N/A'}">
+             data-package-name="${escapeHTML(pkg.name)}"
+             data-package-price="${escapeHTML(pkg.price)}"
+             data-package-duration="${escapeHTML(pkg.duration || 'N/A')}">
             <div class="package-image">
-                <img src="${pkg.image || '/public/images/default-package.jpg'}" alt="${pkg.name}" onerror="this.src='/public/images/default-package.jpg'">
-                <div class="package-badge">${pkg.duration || 'N/A'}</div>
+                <img src="${escapeHTML(pkg.image || '/img/bedroom.jpg')}" alt="${escapeHTML(pkg.name)}" onerror="this.src='/img/bedroom.jpg'">
+                <div class="package-badge">${escapeHTML(pkg.duration || 'N/A')}</div>
             </div>
             <div class="package-content">
-                <h3>${pkg.name}</h3>
-                <p>${pkg.description || 'Experience the best of nature and comfort.'}</p>
+                <h3>${escapeHTML(pkg.name)}</h3>
+                <p>${escapeHTML(pkg.description || 'Experience the best of nature and comfort.')}</p>
                 <div class="package-features">
                     ${pkg.features && pkg.features.length > 0 ? pkg.features.slice(0, 3).map(feature => `
-                        <span class="feature-tag">${feature}</span>
+                        <span class="feature-tag">${escapeHTML(feature)}</span>
                     `).join('') : ''}
                 </div>
                 <div class="package-footer">
@@ -936,14 +929,14 @@ function renderActivities(activities) {
     activitiesGrid.innerHTML = activities.map(activity => `
         <div class="activity-card" 
              data-activity-id="${activity._id}"
-             data-activity-name="${activity.name}"
-             data-activity-price="${activity.price}">
+             data-activity-name="${escapeHTML(activity.name)}"
+             data-activity-price="${escapeHTML(activity.price)}">
             <div class="activity-image">
-                <img src="${activity.image || '/public/images/default-activity.jpg'}" alt="${activity.name}" onerror="this.src='/public/images/default-activity.jpg'">
+                <img src="${escapeHTML(activity.image || '/img/vally.jpg')}" alt="${escapeHTML(activity.name)}" onerror="this.src='/img/vally.jpg'">
             </div>
             <div class="activity-content">
-                <h4>${activity.name}</h4>
-                <p>${activity.description || 'Enhance your stay with this activity.'}</p>
+                <h4>${escapeHTML(activity.name)}</h4>
+                <p>${escapeHTML(activity.description || 'Enhance your stay with this activity.')}</p>
                 <div class="activity-footer">
                     <span class="activity-price">₹${formatPrice(activity.price)}</span>
                     <div class="activity-checkbox">

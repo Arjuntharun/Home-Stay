@@ -2,28 +2,22 @@
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-if (hamburger) {
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-}
-
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const target = document.getElementById(this.getAttribute('href').slice(1));
         if (target) {
             target.scrollIntoView({
-                behavior: 'smooth',
+                behavior: siteScrollBehavior,
                 block: 'start'
             });
             
             // Close mobile menu if open
             if (navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
-                hamburger.classList.remove('active');
+                hamburger?.classList.remove('active');
+                hamburger?.setAttribute('aria-expanded', 'false');
             }
         }
     });
@@ -32,7 +26,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Contact Form Submission
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', function(e) {
+contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
     // Get form values
@@ -45,33 +39,27 @@ contactForm.addEventListener('submit', function(e) {
         message: document.getElementById('message').value
     };
     
-    // Validate form
-    if (validateForm(formData)) {
-        // Show success message
-        const submitBtn = contactForm.querySelector('.submit-btn');
-        const originalText = submitBtn.textContent;
-        
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-        
-        // Simulate form submission
-        setTimeout(() => {
-            submitBtn.textContent = 'Message Sent!';
-            submitBtn.style.background = '#22c55e';
-            
-            // Reset form
-            contactForm.reset();
-            
-            // Show success notification
-            showNotification('Thank you! Your message has been sent successfully. We\'ll get back to you soon.', 'success');
-            
-            // Reset button after 3 seconds
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.style.background = '';
-                submitBtn.disabled = false;
-            }, 3000);
-        }, 1500);
+    if (!validateForm(formData)) return;
+
+    const submitBtn = contactForm.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    try {
+        const response = await fetch(`${API_BASE_URL}/contact`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message);
+        contactForm.reset();
+        showNotification('Your inquiry was sent.', 'success');
+    } catch (error) {
+        showNotification(error.message || 'Unable to send your inquiry. Please try again.', 'error');
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
     }
 });
 
@@ -123,6 +111,7 @@ function showNotification(message, type) {
     
     // Create notification element
     const notification = document.createElement('div');
+    notification.setAttribute('role', type === 'error' ? 'alert' : 'status');
     notification.className = `notification ${type}`;
     notification.textContent = message;
     
@@ -248,36 +237,6 @@ document.querySelectorAll('.contact-card, .faq-item, .contact-form-wrapper, .map
     observer.observe(el);
 });
 
-// Newsletter form validation
-const newsletterInput = document.querySelector('.newsletter-form input');
-const subscribeBtn = document.querySelector('.newsletter-form button');
-
-if (subscribeBtn && newsletterInput) {
-    subscribeBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const email = newsletterInput.value;
-        
-        if (validateEmail(email)) {
-            subscribeBtn.textContent = 'Subscribed!';
-            subscribeBtn.style.background = 'rgba(74, 222, 128, 0.3)';
-            newsletterInput.value = '';
-            
-            showNotification('Successfully subscribed to newsletter!', 'success');
-            
-            setTimeout(() => {
-                subscribeBtn.textContent = 'Subscribe';
-                subscribeBtn.style.background = '';
-            }, 3000);
-        } else {
-            newsletterInput.style.borderColor = '#ef4444';
-            showNotification('Please enter a valid email address', 'error');
-            setTimeout(() => {
-                newsletterInput.style.borderColor = '';
-            }, 2000);
-        }
-    });
-}
-
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
@@ -342,7 +301,7 @@ if (phoneInput) {
 }
 
 // Button ripple effect
-document.querySelectorAll('.submit-btn, .newsletter-form button').forEach(button => {
+document.querySelectorAll('.submit-btn').forEach(button => {
     button.addEventListener('click', function(e) {
         const ripple = document.createElement('span');
         const rect = this.getBoundingClientRect();
@@ -382,7 +341,7 @@ rippleStyle.textContent = `
         }
     }
     
-    .submit-btn, .newsletter-form button {
+    .submit-btn {
         position: relative;
         overflow: hidden;
     }

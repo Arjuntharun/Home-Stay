@@ -48,6 +48,31 @@ const uploadToCloudinary = (buffer) => {
 router.use(protect);
 router.use(authorize('admin'));
 
+for (const [path, key, Model] of [
+  ['packages', 'package', Package],
+  ['activities', 'activity', Activity]
+]) {
+  router.get('/' + path, async (req, res, next) => {
+    try {
+      const items = await Model.find().sort({ createdAt: -1 });
+      res.json({ success: true, data: { [path]: items } });
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  router.get('/' + path + '/:id', async (req, res, next) => {
+    try {
+      const item = await Model.findById(req.params.id);
+      if (!item) return res.status(404).json({ success: false, message: 'Catalog item not found' });
+      res.json({ success: true, data: { [key]: item } });
+    } catch (error) {
+      next(error);
+    }
+  });
+}
+
+
 // ========== DASHBOARD ==========
 // @route   GET /api/admin/dashboard
 // @desc    Get dashboard statistics
@@ -257,7 +282,7 @@ router.put('/packages/:id', upload.single('image'), async (req, res) => {
 // @access  Private/Admin
 router.delete('/packages/:id', async (req, res) => {
   try {
-    const package = await Package.findByIdAndDelete(req.params.id);
+    const package = await Package.findByIdAndUpdate(req.params.id, { isActive: false });
 
     if (!package) {
       return res.status(404).json({
@@ -268,7 +293,7 @@ router.delete('/packages/:id', async (req, res) => {
 
     res.json({
       success: true,
-      message: 'Package deleted successfully'
+      message: 'Package archived successfully'
     });
   } catch (error) {
     console.error('Delete package error:', error);
@@ -371,7 +396,7 @@ router.put('/activities/:id', upload.single('image'), async (req, res) => {
 // @access  Private/Admin
 router.delete('/activities/:id', async (req, res) => {
   try {
-    const activity = await Activity.findByIdAndDelete(req.params.id);
+    const activity = await Activity.findByIdAndUpdate(req.params.id, { isActive: false });
 
     if (!activity) {
       return res.status(404).json({
@@ -382,7 +407,7 @@ router.delete('/activities/:id', async (req, res) => {
 
     res.json({
       success: true,
-      message: 'Activity deleted successfully'
+      message: 'Activity archived successfully'
     });
   } catch (error) {
     console.error('Delete activity error:', error);

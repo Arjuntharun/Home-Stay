@@ -8,14 +8,5 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Verify connection
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('Email service error:', error);
-  } else {
-    console.log('Email service is ready');
-  }
-});
-
 module.exports = transporter;
 

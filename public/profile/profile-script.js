@@ -1,4 +1,3 @@
-const API_BASE_URL = 'http://localhost:5000/api';
 
 // Check if user is logged in
 function checkAuth() {
@@ -118,13 +117,13 @@ async function loadBookings() {
                     return `
                         <div class="booking-item">
                             <div class="booking-header">
-                                <div class="booking-id">Booking ID: ${booking.bookingId || 'N/A'}</div>
-                                <div class="booking-status ${statusClass}">${statusText}</div>
+                                <div class="booking-id">Booking ID: ${escapeHTML(booking.bookingId || 'N/A')}</div>
+                                <div class="booking-status ${escapeHTML(statusClass)}">${escapeHTML(statusText)}</div>
                             </div>
                             <div class="booking-details">
                                 <div class="booking-detail-item">
                                     <div class="booking-detail-label">Package</div>
-                                    <div class="booking-detail-value">${booking.package?.name || 'N/A'}</div>
+                                    <div class="booking-detail-value">${escapeHTML(booking.package?.name || 'N/A')}</div>
                                 </div>
                                 <div class="booking-detail-item">
                                     <div class="booking-detail-label">Check-in</div>
@@ -136,7 +135,7 @@ async function loadBookings() {
                                 </div>
                                 <div class="booking-detail-item">
                                     <div class="booking-detail-label">Guests</div>
-                                    <div class="booking-detail-value">${booking.adults || 1} Adult(s)${booking.children > 0 ? `, ${booking.children} Child(ren)` : ''}</div>
+                                    <div class="booking-detail-value">${escapeHTML(booking.adults || 1)} Adult(s)${booking.children > 0 ? `, ${escapeHTML(booking.children)} Child(ren)` : ''}</div>
                                 </div>
                                 <div class="booking-detail-item">
                                     <div class="booking-detail-label">Total Amount</div>
@@ -155,11 +154,11 @@ async function loadBookings() {
             }
         } else {
             console.error('Failed to load bookings:', data);
-            bookingsList.innerHTML = `<p class="loading-text">Failed to load bookings: ${data.message || 'Unknown error'}</p>`;
+            bookingsList.innerHTML = `<p class="loading-text">Failed to load bookings: ${escapeHTML(data.message || 'Unknown error')}</p>`;
         }
     } catch (error) {
         console.error('Error loading bookings:', error);
-        bookingsList.innerHTML = `<p class="loading-text">Error loading bookings: ${error.message}</p>`;
+        bookingsList.innerHTML = `<p class="loading-text">Error loading bookings: ${escapeHTML(error.message)}</p>`;
     }
 }
 

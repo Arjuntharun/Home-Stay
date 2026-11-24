@@ -6,6 +6,7 @@
     <title>Activities - Hawkins Homestay</title>
     <link rel="stylesheet" href="activities-style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/js/site.css">
 </head>
 <body>
 
@@ -21,7 +22,7 @@
                     <p>HOMESTAY</p>
                 </div>
             </div>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="main-nav-menu">
                 <li><a href="/index.html">HOME</a></li>
                 <li><a href="/public/about/about.html">ABOUT</a></li>
                 <li><a href="/public/activities/activities.html" class="active">ACTIVITIES</a></li>
@@ -29,6 +30,7 @@
                 <li><a href="/public/packages/packages.html">PACKAGES</a></li>
                 <li><a href="/public/wayanad/wayanad.html">WAYANAD</a></li>
                 <li><a href="/public/contact/contact.html">CONTACT</a></li>
+                <li class="mobile-account"><a href="/login/login.html">SIGN IN</a></li>
             </ul>
             <div class="nav-right">
                 <button class="search-btn">
@@ -39,11 +41,11 @@
                 </button>
                 <a href="/public/login/login.html" class="login-btn">LOGIN</a>
             </div>
-            <div class="hamburger">
+            <button type="button" class="hamburger" aria-label="Toggle navigation" aria-controls="main-nav-menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -67,6 +69,39 @@
             <span class="section-tag">EXPLORE & DISCOVER</span>
             <h2>Unforgettable Adventures in Wayanad</h2>
             <p>From sunrise treks to thrilling night safaris, Hawkins Homestay offers a curated selection of adventure activities that let you experience Wayanad's natural beauty in the most exciting ways. Whether you're an adrenaline junkie or a nature lover, we have something special for everyone.</p>
+        </div>
+    </section>
+
+    <section class="activities-section" aria-labelledby="local-experiences">
+        <div class="section-header">
+            <h2 class="section-title" id="local-experiences">Explore Wayanad</h2>
+            <p class="section-subtitle">Ask your host about local access and the best time to visit.</p>
+        </div>
+        <div class="activities-grid">
+            <article class="activity-card local-experience">
+                <div class="activity-image"><img loading="lazy" decoding="async" src="/img/coffee-walk.jpg" alt="Ripe coffee cherries growing beneath glossy leaves"></div>
+                <div class="activity-content">
+                    <h3>Coffee plantation walk</h3>
+                    <p class="activity-description">Walk beneath shade trees and look for clusters of coffee cherries. Ask your host about an estate that welcomes visitors.</p>
+                    <a href="/contact/contact.html">Ask about this activity</a>
+                </div>
+            </article>
+            <article class="activity-card local-experience">
+                <div class="activity-image"><img loading="lazy" decoding="async" src="/img/hornbill-watching.jpg" alt="A grey hornbill perched on a leafy forest branch"></div>
+                <div class="activity-content">
+                    <h3>Morning birdwatching</h3>
+                    <p class="activity-description">Bring binoculars for a quiet morning at the forest edge. Listen for hornbill calls and watch the canopy from the trail.</p>
+                    <a href="/contact/contact.html">Ask about this activity</a>
+                </div>
+            </article>
+            <article class="activity-card local-experience">
+                <div class="activity-image"><img loading="lazy" decoding="async" src="/img/tea-ridge.jpg" alt="Curving rows of tea bushes along a green hillside"></div>
+                <div class="activity-content">
+                    <h3>Tea garden photography</h3>
+                    <p class="activity-description">Frame the curves of the tea rows in soft morning light. Use public viewpoints or arrange estate access before your visit.</p>
+                    <a href="/contact/contact.html">Ask about this activity</a>
+                </div>
+            </article>
         </div>
     </section>
 
@@ -185,14 +220,6 @@
                 <p>Location: Wayanad, Kerala</p>
             </div>
 
-            <div class="footer-column">
-                <h4>Newsletter</h4>
-                <p>Subscribe for special offers</p>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Your email">
-                    <button type="submit">Subscribe</button>
-                </div>
-            </div>
         </div>
 
         <div class="footer-bottom">
@@ -200,6 +227,7 @@
         </div>
     </footer>
 
+    <script src="/js/site.js"></script>
     <script src="activities-script.js"></script>
 
 </body>

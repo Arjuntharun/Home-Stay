@@ -35,11 +35,17 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  resetTokenHash: { type: String, select: false },
+  resetExpires: { type: Date, select: false },
+  passwordChangedAt: { type: Date, select: false },
+  otpAttempts: { type: Number, default: 0, select: false },
   otp: {
+    select: false,
     type: String,
     default: null
   },
   otpExpiry: {
+    select: false,
     type: Date,
     default: null
   },

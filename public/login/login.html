@@ -6,6 +6,7 @@
     <title>Login - Hawkins Homestay</title>
     <link rel="stylesheet" href="login-style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/js/site.css">
 </head>
 <body>
 
@@ -21,7 +22,7 @@
                     <p>HOMESTAY</p>
                 </div>
             </div>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="main-nav-menu">
                 <li><a href="/index.html">HOME</a></li>
                 <li><a href="/public/about/about.html">ABOUT</a></li>
                 <li><a href="/public/activities/activities.html">ACTIVITIES</a></li>
@@ -30,20 +31,17 @@
                 <li><a href="/public/wayanad/wayanad.html">WAYANAD</a></li>
                 <li><a href="/public/contact/contact.html">CONTACT</a></li>
             </ul>
-            <div class="hamburger">
+            <button type="button" class="hamburger" aria-label="Toggle navigation" aria-controls="main-nav-menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
     <!-- Login Section -->
     <section class="login-section">
-        <!-- Background Video -->
-        <video class="login-video" autoplay muted loop playsinline>
-            <source src="/public/hero-video.mov" type="video/mp4">
-        </video>
+        <img class="login-image" src="/hero-plantation.jpg" alt="" fetchpriority="high">
 
         <div class="login-overlay"></div>
 
@@ -85,7 +83,7 @@
                                 <input type="checkbox" id="remember">
                                 <span>Remember me</span>
                             </label>
-                            <a href="#" class="forgot-password">Forgot Password?</a>
+                            <a href="/login/recover.html" class="forgot-password">Forgot Password?</a>
                         </div>
 
                         <button type="submit" class="submit-btn" id="login-submit">Login</button>
@@ -175,7 +173,9 @@
                             </div>
                             <div class="input-group">
                                 <label for="otp-input">Enter OTP</label>
-                                <input type="text" id="otp-input" placeholder="000000" maxlength="6" pattern="[0-9]{6}" required>
+                                <input type="text" inputmode="numeric" autocomplete="one-time-code" id="otp-input" placeholder="000000" maxlength="6" pattern="[0-9]{6}" required>
+                                <label for="otp-password">Choose your account password</label>
+                                <input type="password" id="otp-password" autocomplete="new-password" minlength="6" required>
                             </div>
                             <button type="submit" class="submit-btn" id="verify-otp-btn">Verify OTP</button>
                             <button type="button" class="resend-otp-btn" id="resend-otp-btn">Resend OTP</button>
@@ -208,6 +208,7 @@
         </div>
     </section>
 
+    <script src="/js/site.js"></script>
     <script src="login-script.js"></script>
 
 </body>

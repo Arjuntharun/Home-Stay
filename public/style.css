@@ -291,13 +291,14 @@ h1, h2, h3, h4 {
 /* Hero Section */
 .hero {
     position: relative;
+    isolation: isolate;
     min-height: 100vh;
     display: flex;
     align-items: center;
     padding: 120px 2rem 120px;
 }
 
-.hero-video {
+.hero-image {
     position: absolute;
     top: 0;
     left: 0;
@@ -363,6 +364,8 @@ h1, h2, h3, h4 {
 }
 
 .hero-btn {
+    display: inline-block;
+    text-decoration: none;
     padding: 1rem 3rem;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.3);

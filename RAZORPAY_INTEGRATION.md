@@ -44,8 +44,8 @@
 ### Current Setup
 The Razorpay credentials are configured in `backend/.env`:
 ```
-RAZORPAY_KEY_ID=rzp_test_Re7Ks1Il3ik9Ci
-RAZORPAY_KEY_SECRET=7Hfjeor4UI0GJD8Bn0HXcZnj
+RAZORPAY_KEY_ID=YOUR_RAZORPAY_KEY_ID
+RAZORPAY_KEY_SECRET=YOUR_RAZORPAY_KEY_SECRET
 ```
 
 ### To Update Razorpay Credentials

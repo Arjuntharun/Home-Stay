@@ -1,23 +1,16 @@
 // API Base URL
-const API_BASE_URL = 'http://localhost:5000/api';
 
 // Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
-
-if (hamburger) {
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-}
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', function() {
         if (navMenu.classList.contains('active')) {
             navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
+            hamburger?.classList.remove('active');
+                hamburger?.setAttribute('aria-expanded', 'false');
         }
     });
 });
@@ -77,7 +70,7 @@ function renderPackages(packages) {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    <span>${feature}</span>
+                    <span>${escapeHTML(feature)}</span>
                 </div>
             `).join('')
             : '';
@@ -85,16 +78,16 @@ function renderPackages(packages) {
         return `
             <div class="package-card glass-liquid" 
                  data-package-id="${pkg._id}"
-                 data-package-name="${pkg.name}"
-                 data-package-price="${pkg.price}">
+                 data-package-name="${escapeHTML(pkg.name)}"
+                 data-package-price="${escapeHTML(pkg.price)}">
                 <div class="package-image">
-                    <img src="${pkg.image || '/public/images/default-package.jpg'}" alt="${pkg.name}" onerror="this.src='/public/images/default-package.jpg'">
-                    <div class="package-badge">${pkg.duration || 'N/A'}</div>
+                    <img src="${escapeHTML(pkg.image || '/img/bedroom.jpg')}" alt="${escapeHTML(pkg.name)}" onerror="this.src='/img/bedroom.jpg'">
+                    <div class="package-badge">${escapeHTML(pkg.duration || 'N/A')}</div>
                 </div>
                 <div class="package-content">
-                    <h3>${pkg.name}</h3>
-                    <div class="package-duration">${pkg.duration || 'Custom Duration'}</div>
-                    <p class="package-description">${pkg.description || 'Experience the best of nature and comfort at Hawkins Homestay.'}</p>
+                    <h3>${escapeHTML(pkg.name)}</h3>
+                    <div class="package-duration">${escapeHTML(pkg.duration || 'Custom Duration')}</div>
+                    <p class="package-description">${escapeHTML(pkg.description || 'Experience the best of nature and comfort at Hawkins Homestay.')}</p>
                     <div class="package-features">
                         ${featuresHtml}
                     </div>
@@ -176,33 +169,6 @@ function observePackageCards() {
         el.style.transform = 'translateY(30px)';
         el.style.transition = `all 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
         observer.observe(el);
-    });
-}
-
-// Newsletter form validation
-const newsletterInput = document.querySelector('.newsletter-form input');
-const subscribeBtn = document.querySelector('.newsletter-form button');
-
-if (subscribeBtn && newsletterInput) {
-    subscribeBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const email = newsletterInput.value;
-        
-        if (validateEmail(email)) {
-            subscribeBtn.textContent = 'Subscribed!';
-            subscribeBtn.style.background = 'rgba(74, 222, 128, 0.3)';
-            newsletterInput.value = '';
-            
-            setTimeout(() => {
-                subscribeBtn.textContent = 'Subscribe';
-                subscribeBtn.style.background = '';
-            }, 3000);
-        } else {
-            newsletterInput.style.borderColor = '#ef4444';
-            setTimeout(() => {
-                newsletterInput.style.borderColor = '';
-            }, 2000);
-        }
     });
 }
 
@@ -432,10 +398,10 @@ document.querySelectorAll('.package-card').forEach(card => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const target = document.getElementById(this.getAttribute('href').slice(1));
         if (target) {
             target.scrollIntoView({
-                behavior: 'smooth',
+                behavior: siteScrollBehavior,
                 block: 'start'
             });
         }

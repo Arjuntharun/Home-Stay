@@ -1,5 +1,4 @@
 // Authentication utility functions
-const API_BASE_URL = 'http://localhost:5000/api';
 
 // Store token in localStorage
 function setToken(token) {
@@ -103,6 +102,11 @@ function logout() {
 function updateAuthUI() {
     const user = getUser();
     const token = getToken();
+    const mobileAccount = document.querySelector('.mobile-account a');
+    if (mobileAccount && token && user) {
+        mobileAccount.href = '/profile/profile.html';
+        mobileAccount.textContent = 'MY PROFILE';
+    }
     
     // Find login button in navigation
     const navRight = document.querySelector('.nav-right');
@@ -122,13 +126,13 @@ function updateAuthUI() {
             userDropdown = document.createElement('div');
             userDropdown.className = 'user-dropdown';
             userDropdown.innerHTML = `
-                <div class="user-avatar" id="user-avatar">
-                    ${user.name.charAt(0).toUpperCase()}
-                </div>
+                <button type="button" class="user-avatar" id="user-avatar" aria-label="Account menu" aria-expanded="false" aria-controls="user-dropdown-menu">
+                    ${escapeHTML(user.name.charAt(0).toUpperCase())}
+                </button>
                 <div class="user-dropdown-menu" id="user-dropdown-menu">
                     <div class="user-info">
-                        <div class="user-name">${user.name}</div>
-                        <div class="user-email">${user.email}</div>
+                        <div class="user-name">${escapeHTML(user.name)}</div>
+                        <div class="user-email">${escapeHTML(user.email)}</div>
                     </div>
                     <div class="dropdown-divider"></div>
                     <a href="/public/profile/profile.html" class="dropdown-item">
@@ -157,7 +161,7 @@ function updateAuthUI() {
             
             avatar.addEventListener('click', (e) => {
                 e.stopPropagation();
-                menu.classList.toggle('show');
+                avatar.setAttribute('aria-expanded', String(menu.classList.toggle('show')));
             });
             
             logoutBtn.addEventListener('click', (e) => {
@@ -169,6 +173,7 @@ function updateAuthUI() {
             document.addEventListener('click', (e) => {
                 if (!userDropdown.contains(e.target)) {
                     menu.classList.remove('show');
+                    avatar.setAttribute('aria-expanded', 'false');
                 }
             });
         }

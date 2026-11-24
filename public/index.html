@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="/js/site.css">
+</head>
 <body>
 
     <!-- Navigation -->
@@ -21,7 +23,7 @@
                     <p>HOMESTAY</p>
                 </div>
             </div>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="main-nav-menu">
                 <li><a href="#home" class="active">HOME</a></li>
                 <li><a href="/public/about/about.html">ABOUT</a></li>
                 <li><a href="/public/activities/activities.html">ACTIVITIES</a></li>
@@ -29,9 +31,10 @@
                 <li><a href="/public/packages/packages.html">PACKAGES</a></li>
                 <li><a href="/public/wayanad/wayanad.html">WAYANAD</a></li>
                 <li><a href="/public/contact/contact.html">CONTACT</a></li>
+                <li class="mobile-account"><a href="/login/login.html">SIGN IN</a></li>
             </ul>
             <div class="nav-right">
-                <button class="search-btn">
+                <button class="search-btn" type="button" aria-label="Search">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
@@ -40,21 +43,18 @@
                 <a href="/public/login/login.html" class="login-btn">LOGIN</a>
                 <a href="/public/book/book.html" class="booked-btn">BOOK NOW</a>
             </div>
-            <div class="hamburger">
+            <button type="button" class="hamburger" aria-label="Toggle navigation" aria-controls="main-nav-menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
-    <!-- Hero Section with Video -->
+    <!-- Hero section -->
     <section class="hero" id="home">
 
-        <!-- Background Video -->
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="/public/hero-video.mov" type="video/mp4">
-        </video>
+        <img class="hero-image" src="/hero-plantation.jpg" alt="" fetchpriority="high">
 
         <div class="hero-overlay"></div>
 
@@ -65,9 +65,9 @@
                     <span class="title-sub">FOREST</span>
                 </h1>
                 <p class="hero-description">
-                    There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope
+                    Stay in Wayanad and explore Kerala?s forests, plantations, and waterfalls.
                 </p>
-                <button class="hero-btn">LEARN MORE</button>
+                <a class="hero-btn" href="/wayanad/wayanad.html">EXPLORE WAYANAD</a>
             </div>
 
             <!-- Stats Cards -->
@@ -122,7 +122,7 @@
 
             <div class="feature-card glass-liquid">
                 <div class="feature-image">
-                    <img src="/public/img/bedroom.jpg" alt="Luxury Rooms">
+                    <img loading="lazy" decoding="async" src="/public/img/bedroom.jpg" alt="Luxury Rooms">
                 </div>
                 <div class="feature-content">
                     <h3>Luxury Rooms</h3>
@@ -133,7 +133,7 @@
 
             <div class="feature-card glass-liquid">
                 <div class="feature-image">
-                    <img src="/public/img/zipline.jpg" alt="Adventure">
+                    <img loading="lazy" decoding="async" src="/public/img/zipline.jpg" alt="Adventure">
                 </div>
                 <div class="feature-content">
                     <h3>Adventure Activities</h3>
@@ -144,7 +144,7 @@
 
             <div class="feature-card glass-liquid">
                 <div class="feature-image">
-                    <img src="/public/img/food.hw.jpeg" alt="Dining">
+                    <img loading="lazy" decoding="async" src="/public/img/food.hw.jpeg" alt="Dining">
                 </div>
                 <div class="feature-content">
                     <h3>Authentic Cuisine</h3>
@@ -155,7 +155,7 @@
 
             <div class="feature-card glass-liquid">
                 <div class="feature-image">
-                    <img src="/public/img/truckingplace.jpeg" alt="Nature">
+                    <img loading="lazy" decoding="async" src="/public/img/truckingplace.jpeg" alt="Nature">
                 </div>
                 <div class="feature-content">
                     <h3>Nature Trails</h3>
@@ -309,16 +309,9 @@
                 <p>Phone: +91 7025937034</p>
                 <p>Email: info@hawkinshomestay.com</p>
                 <p>Location: Wayanad, Kerala</p>
+                <a href="/admin/admin-login.html">Staff sign in</a>
             </div>
 
-            <div class="footer-column">
-                <h4>Newsletter</h4>
-                <p>Subscribe for special offers</p>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Your email">
-                    <button type="submit">Subscribe</button>
-                </div>
-            </div>
         </div>
 
         <div class="footer-bottom">
@@ -326,6 +319,7 @@
         </div>
     </footer>
 
+    <script src="/js/site.js"></script>
     <script src="/js/auth.js"></script>
     <script src="script.js"></script>
 

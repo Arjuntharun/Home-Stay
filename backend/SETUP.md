@@ -7,6 +7,17 @@
 - Razorpay account
 - Gmail account with App Password enabled
 
+## Staging verification
+
+Serve the public site and API on the same HTTPS origin. Configure `PUBLIC_SITE_URL` with that origin, and use a staging database, Razorpay test keys and an email inbox you control. If the app is behind a reverse proxy, configure `TRUST_PROXY_HOPS` for the exact proxy topology so request limits use the correct client address. The in-process request limits apply per server instance.
+
+1. Confirm `/api/health` returns 200 with MongoDB connected and 503 during a database outage.
+2. Submit a contact inquiry and confirm receipt. Confirm the reply goes to the sender.
+3. Register and verify a test account. Confirm incorrect codes are limited and redeemed codes cannot be reused.
+4. Request and follow a password reset email. Confirm the link works once, the previous password and session stop working, and the new password works.
+5. Create a booking for an active package and complete a Razorpay test payment. Confirm the booking, payment, profile history, admin dashboard and confirmation email refer to the same booking. Repeat for checkout dismissal and payment failure, then check cancellation and refund behavior against the property's policy.
+6. Archive the package and confirm it disappears from public listings while remaining visible in the test booking and admin catalog.
+
 ## Step-by-Step Setup
 
 ### 1. Install Dependencies
@@ -23,26 +34,29 @@ PORT=5000
 NODE_ENV=development
 
 # MongoDB
-MONGO_URI=mongodb+srv://arjunwtsapp1_db_user:Arjun121%23@arjun.8tldgld.mongodb.net/?appName=Arjun
+MONGO_URI=YOUR_MONGO_URI
 
 # JWT
-JWT_SECRET=aeaa56fdc1112d087bb98a179e1b3a780335f74b622e68dfad3dc789591ca3a74c2adbde413a5884a360529b85c0bf44c9f054614e73238c0682429d8114fcc0
+JWT_SECRET=YOUR_JWT_SECRET
 
 # Email
-EMAIL_USER=arjunwtsapp1@gmail.com
-EMAIL_PASS=jdbk kedi uhui cbcc
+EMAIL_USER=YOUR_EMAIL_USER
+EMAIL_PASS=YOUR_EMAIL_PASS
 
 # Razorpay
-RAZORPAY_KEY_ID=rzp_test_Re7Ks1Il3ik9Ci
-RAZORPAY_KEY_SECRET=7Hfjeor4UI0GJD8Bn0HXcZnj
+RAZORPAY_KEY_ID=YOUR_RAZORPAY_KEY_ID
+RAZORPAY_KEY_SECRET=YOUR_RAZORPAY_KEY_SECRET
 
 # Cloudinary
-CLOUDINARY_CLOUD_NAME=dwzo1w1rw
-CLOUDINARY_API_KEY=787897544381928
-CLOUDINARY_API_SECRET=3AYDllwIl4ztERadYXxgtzkDZxg
+CLOUDINARY_CLOUD_NAME=YOUR_CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY=YOUR_CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET=YOUR_CLOUDINARY_API_SECRET
 
-# Frontend URL
-FRONTEND_URL=http://localhost:5000
+# Public origin used in password recovery emails
+PUBLIC_SITE_URL=http://localhost:5000
+
+# Optional destination for contact inquiries (defaults to EMAIL_USER)
+INQUIRY_EMAIL=YOUR_INQUIRY_INBOX
 ```
 
 ### 3. Create Admin User

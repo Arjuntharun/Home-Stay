@@ -19,8 +19,11 @@ const activityRoutes = require('./routes/activity');
 const app = express();
 
 // Middleware
-app.use(cors());
-app.use(express.json());
+const allowedOrigins = (process.env.CORS_ORIGINS || '').split(',').map(origin => origin.trim()).filter(Boolean);
+if (allowedOrigins.length) app.use(cors({ origin: allowedOrigins }));
+app.disable('x-powered-by');
+if (process.env.TRUST_PROXY_HOPS) app.set('trust proxy', Number(process.env.TRUST_PROXY_HOPS));
+app.use(express.json({ limit: '100kb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from public directory
@@ -34,14 +37,14 @@ app.get('/', (req, res) => {
 
 // Database connection
 mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000,
 })
 .then(() => console.log('MongoDB connected successfully'))
 .catch((err) => console.error('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/contact', require('./routes/contact'));
 app.use('/api/user', userRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/payments', paymentRoutes);
@@ -51,7 +54,8 @@ app.use('/api/activities', activityRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
+  const ready = mongoose.connection.readyState === 1 && Boolean(process.env.JWT_SECRET);
+  res.status(ready ? 200 : 503).json({ status: ready ? 'OK' : 'unavailable' });
 });
 
 // Serve frontend HTML files

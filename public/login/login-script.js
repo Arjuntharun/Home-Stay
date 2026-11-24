@@ -1,23 +1,16 @@
 // Import auth utilities
-const API_BASE_URL = 'http://localhost:5000/api';
 
 // Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
-
-if (hamburger) {
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-}
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', function() {
         if (navMenu.classList.contains('active')) {
             navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
+            hamburger?.classList.remove('active');
+                hamburger?.setAttribute('aria-expanded', 'false');
         }
     });
 });
@@ -181,12 +174,13 @@ if (signupSubmit) {
             
             if (data.success) {
                 registrationEmail = email;
-                showNotification('OTP sent to your email!', 'success');
+                showNotification(data.message, 'success');
                 
                 // Hide signup form, show OTP verification
                 document.getElementById('signup-form-fields').style.display = 'none';
                 document.getElementById('otp-verification-section').style.display = 'block';
                 document.getElementById('otp-email-display').textContent = email;
+                document.getElementById('otp-password').value = password;
             } else {
                 showNotification(data.message || 'Registration failed', 'error');
                 this.disabled = false;
@@ -208,6 +202,7 @@ if (verifyOtpBtn) {
         e.preventDefault();
         
         const otp = document.getElementById('otp-input').value;
+        const password = document.getElementById('otp-password').value;
         
         if (!otp || otp.length !== 6) {
             showNotification('Please enter a valid 6-digit OTP', 'error');
@@ -223,7 +218,7 @@ if (verifyOtpBtn) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: registrationEmail, otp })
+                body: JSON.stringify({ email: registrationEmail, otp, password })
             });
             
             const data = await response.json();
@@ -384,6 +379,7 @@ function resetForms() {
     document.getElementById('signup-form-fields').style.display = 'block';
     document.getElementById('otp-verification-section').style.display = 'none';
     document.getElementById('otp-input').value = '';
+    document.getElementById('otp-password').value = '';
     registrationEmail = '';
 }
 
