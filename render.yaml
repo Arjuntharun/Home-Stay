@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     buildCommand: npm ci --prefix backend --omit=dev
-    startCommand: cd backend && node server.js
+    startCommand: cd backend && node scripts/seedCatalog.js && node server.js
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV

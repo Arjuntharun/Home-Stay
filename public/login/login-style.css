@@ -120,7 +120,8 @@ h1, h2, h3, h4 {
     padding: 120px 2rem 60px;
 }
 
-.login-image {
+.login-image,
+.login-video {
     position: absolute;
     top: 0;
     left: 0;

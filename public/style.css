@@ -298,7 +298,8 @@ h1, h2, h3, h4 {
     padding: 120px 2rem 120px;
 }
 
-.hero-image {
+.hero-image,
+.hero-video {
     position: absolute;
     top: 0;
     left: 0;
